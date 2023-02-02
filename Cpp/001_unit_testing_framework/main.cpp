@@ -108,7 +108,7 @@ ostream &operator<<(ostream &out, const map<Key, Value> &m)
 //=======================
 
 template<typename T, typename U>
-void AssertEqual(const T &t, const U &u, const string &hint = "")
+void AssertEqual(const T &t, const U &u, const string &hint = {})
 {
     if (t != u) {
         ostringstream os;
@@ -117,7 +117,7 @@ void AssertEqual(const T &t, const U &u, const string &hint = "")
     }
 }
 
-void Assert(bool b, const string &hint = "")
+void Assert(bool b, const string &hint = {})
 {
     AssertEqual(b, true, hint);
 }
@@ -219,6 +219,9 @@ public:
         } catch (runtime_error &e) {
             ++fail_count;
             cerr << test_name << " fail: " << e.what() << endl;
+        } catch (...) {
+            ++fail_count;
+            cerr << "Unknown exception caught" << endl;
         }
     }
     ~TestRunner()
