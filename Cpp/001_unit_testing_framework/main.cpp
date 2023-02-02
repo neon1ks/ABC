@@ -112,7 +112,10 @@ void AssertEqual(const T &t, const U &u, const string &hint = {})
 {
     if (t != u) {
         ostringstream os;
-        os << "Assertion failed: " << t << " != " << u << " Hint: " << hint;
+        os << "Assertion failed: " << t << " != " << u;
+        if (!hint.empty()) {
+            os << " Hint: " << hint;
+        }
         throw runtime_error(os.str());
     }
 }
@@ -227,7 +230,7 @@ public:
     ~TestRunner()
     {
         if (fail_count > 0) {
-            cerr << fail_count << " tests failed. Terminate" << endl;
+            cerr << fail_count << " unit tests failed. Terminate" << endl;
             exit(1);
         }
     }
